@@ -3,8 +3,8 @@ package pl.artur.zaczek.fit.user.app.mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
-import pl.artur.zaczek.fit.user.app.rest.model.ClientResponse;
-import pl.artur.zaczek.fit.user.app.rest.model.TrainerResponse;
+import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
+import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
 import pl.artur.zaczek.fit.user.app.rest.model.UserDto;
 
 
@@ -20,14 +20,16 @@ public class UserMapper {
                 .name(userEntity.getName())
                 .phoneNumber(userEntity.getPhoneNumber())
                 .avatar(userEntity.getAvatar())
-                .clientResponse(userEntity.getClient() == null ? null : ClientResponse.builder()
+                .gender(userEntity.getGender())
+                .clientDto(userEntity.getClient() == null ? null : ClientDto.builder()
                         .bio(userEntity.getClient().getBio())
                         .fitnessLevel(userEntity.getClient().getFitnessLevel())
                         .goals(userEntity.getClient().getGoals())
                         .id(userEntity.getClient().getId())
                         .build())
-                .trainerResponse(userEntity.getTrainer() == null ? null : TrainerResponse.builder()
+                .trainerDto(userEntity.getTrainer() == null ? null : TrainerDto.builder()
                         .id(userEntity.getTrainer().getId())
+                        .isProfileActive(userEntity.getTrainer().getIsProfileActive())
                         .experience(userEntity.getTrainer().getExperience())
                         .specializations(userEntity.getTrainer().getSpecializations())
                         .description(userEntity.getTrainer().getDescription())

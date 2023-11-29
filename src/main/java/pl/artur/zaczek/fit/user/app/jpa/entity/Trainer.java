@@ -21,6 +21,7 @@ public class Trainer {
     private String description;
     private int experience;
     private String specializations;
+    private Boolean isProfileActive;
     @OneToOne
     @NotNull
     private User user;

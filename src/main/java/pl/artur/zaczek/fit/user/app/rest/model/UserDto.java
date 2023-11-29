@@ -31,6 +31,6 @@ public class UserDto {
     private Gender gender;
     @NotNull
     private LocalDate dateOfBirth;
-    private ClientResponse clientResponse;
-    private TrainerResponse trainerResponse;
+    private ClientDto clientDto;
+    private TrainerDto trainerDto;
 }
