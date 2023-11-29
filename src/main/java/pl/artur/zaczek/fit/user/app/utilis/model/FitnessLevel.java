@@ -1,4 +1,4 @@
-package pl.artur.zaczek.fit.user.app.jpa.entity;
+package pl.artur.zaczek.fit.user.app.utilis.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
