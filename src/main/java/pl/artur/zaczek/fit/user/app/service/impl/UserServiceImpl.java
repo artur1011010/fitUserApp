@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.artur.zaczek.fit.user.app.jpa.entity.Trainer;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
+import pl.artur.zaczek.fit.user.app.jpa.repository.TrainerRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.UserRepository;
 import pl.artur.zaczek.fit.user.app.mapper.TrainerMapper;
 import pl.artur.zaczek.fit.user.app.mapper.UserMapper;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final TrainerMapper trainerMapper;
     private final UserRepository userRepository;
+    private final TrainerRepository trainerRepository;
     private final JwtService jwtService;
 
     @Override
@@ -87,7 +89,9 @@ public class UserServiceImpl implements UserService {
         if (byEmail.isPresent()) {
             final Trainer trainer = trainerMapper.userToUserDto(trainerDto);
             final User user = byEmail.get();
+            trainer.setUser(user);
             user.setTrainer(trainer);
+            userRepository.save(user);
         } else {
             log.error("nie znaleziono profilu usera");
         }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.artur.zaczek.fit.user.app.utilis.model.Gender;
@@ -38,6 +39,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Trainer trainer;
     @OneToOne
     private Client client;
