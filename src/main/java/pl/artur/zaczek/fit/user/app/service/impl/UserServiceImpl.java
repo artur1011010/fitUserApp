@@ -13,10 +13,15 @@ import pl.artur.zaczek.fit.user.app.mapper.UserMapper;
 import pl.artur.zaczek.fit.user.app.rest.error.BadRequestException;
 import pl.artur.zaczek.fit.user.app.rest.error.NotFoundException;
 import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
+import pl.artur.zaczek.fit.user.app.rest.model.RegisterUserRequest;
 import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
 import pl.artur.zaczek.fit.user.app.rest.model.UserDto;
+import pl.artur.zaczek.fit.user.app.rest.model.auth.AuthenticationDto;
+import pl.artur.zaczek.fit.user.app.rest.model.auth.AuthenticationRequest;
+import pl.artur.zaczek.fit.user.app.rest.model.auth.RegisterRequest;
+import pl.artur.zaczek.fit.user.app.service.UserAuthClient;
 import pl.artur.zaczek.fit.user.app.service.UserService;
-import pl.artur.zaczek.fit.user.app.service.auth.JwtService;
+import pl.artur.zaczek.fit.user.app.utilis.model.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +35,35 @@ public class UserServiceImpl implements UserService {
     private final TrainerMapper trainerMapper;
     private final UserRepository userRepository;
     private final TrainerRepository trainerRepository;
-    private final JwtService jwtService;
+    private final UserAuthClient authClient;
+
+    @Override
+    @Transactional
+    public AuthenticationDto registerNewUser(final RegisterUserRequest registerUserRequest) {
+        final RegisterRequest request = RegisterRequest.builder()
+                .email(registerUserRequest.getEmail())
+                .role(Role.USER)
+                .password(registerUserRequest.getPassword())
+                .build();
+
+        final AuthenticationDto authenticationDto = authClient.register(request);
+
+        final User user = User.builder()
+                .name(registerUserRequest.getName())
+                .email(registerUserRequest.getEmail())
+                .phoneNumber(registerUserRequest.getPhoneNumber())
+                .gender(registerUserRequest.getGender())
+                .dateOfBirth(registerUserRequest.getDateOfBirth())
+                .build();
+        log.info("user before save: {}" , user);
+        userRepository.save(user);
+        return authenticationDto;
+    }
+
+    @Override
+    public AuthenticationDto loginUser(final AuthenticationRequest request) {
+        return authClient.login(request);
+    }
 
     @Override
     public List<UserDto> getAllUsers() {
@@ -51,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getMe(final String token) {
-        final String email = jwtService.getEmailFromAuthorization(token);
+        final String email = authClient.authorize(token).email();
         log.info("email: " + email);
         return userRepository
                 .findByEmail(email)
@@ -61,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TrainerDto getMeTrainer(final String token) {
-        final String email = jwtService.getEmailFromAuthorization(token);
+        final String email = authClient.authorize(token).email();
         log.info("email: " + email);
         return userRepository
                 .findByEmail(email)
@@ -72,7 +105,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ClientDto getMeClient(final String token) {
-        final String email = jwtService.getEmailFromAuthorization(token);
+        final String email = authClient.authorize(token).email();
         log.info("email: " + email);
         return userRepository
                 .findByEmail(email)
@@ -84,7 +117,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void postTrainer(String token, TrainerDto trainerDto) {
-        final String email = jwtService.getEmailFromAuthorization(token);
+        final String email = authClient.authorize(token).email();
+        log.info("email: " + email);
         final Optional<User> byEmail = userRepository.findByEmail(email);
         if (byEmail.isPresent()) {
             final Trainer trainer = trainerMapper.userToUserDto(trainerDto);

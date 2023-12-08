@@ -19,7 +19,6 @@ public class UserMapper {
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .phoneNumber(userEntity.getPhoneNumber())
-                .avatar(userEntity.getAvatar())
                 .gender(userEntity.getGender())
                 .clientDto(userEntity.getClient() == null ? null : ClientDto.builder()
                         .bio(userEntity.getClient().getBio())
@@ -43,11 +42,9 @@ public class UserMapper {
                 .id(userDto.getId())
                 .name(userDto.getName())
                 .phoneNumber(userDto.getPhoneNumber())
-                .avatar(userDto.getAvatar())
                 .gender(userDto.getGender())
                 .email(userDto.getEmail())
                 .dateOfBirth(userDto.getDateOfBirth())
                 .build();
     }
-
 }

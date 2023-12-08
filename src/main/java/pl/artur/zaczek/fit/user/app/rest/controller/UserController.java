@@ -3,10 +3,14 @@ package pl.artur.zaczek.fit.user.app.rest.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
+import pl.artur.zaczek.fit.user.app.rest.model.RegisterUserRequest;
 import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
 import pl.artur.zaczek.fit.user.app.rest.model.UserDto;
+import pl.artur.zaczek.fit.user.app.rest.model.auth.AuthenticationDto;
+import pl.artur.zaczek.fit.user.app.rest.model.auth.AuthenticationRequest;
 import pl.artur.zaczek.fit.user.app.service.UserService;
 
 import java.util.List;
@@ -19,6 +23,22 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationDto> register(@Validated @RequestBody final RegisterUserRequest request) {
+        log.info("POST /register:\n{}", request);
+        final AuthenticationDto response = userService.registerNewUser(request);
+        log.info("returning: {}", response);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationDto> login(@Validated @RequestBody final AuthenticationRequest request) {
+        log.info("POST /login:\n{}", request);
+        final AuthenticationDto response = userService.loginUser(request);
+        log.info("returning: {}", response);
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
