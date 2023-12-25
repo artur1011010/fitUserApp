@@ -4,10 +4,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Client;
 import pl.artur.zaczek.fit.user.app.jpa.entity.Trainer;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
+import pl.artur.zaczek.fit.user.app.jpa.repository.ClientRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.TrainerRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.UserRepository;
+import pl.artur.zaczek.fit.user.app.mapper.ClientMapper;
 import pl.artur.zaczek.fit.user.app.mapper.TrainerMapper;
 import pl.artur.zaczek.fit.user.app.mapper.UserMapper;
 import pl.artur.zaczek.fit.user.app.rest.error.BadRequestException;
@@ -33,8 +36,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final TrainerMapper trainerMapper;
+    private final ClientMapper clientMapper;
     private final UserRepository userRepository;
     private final TrainerRepository trainerRepository;
+    private final ClientRepository clientRepository;
     private final UserAuthClient authClient;
 
     @Override
@@ -55,7 +60,7 @@ public class UserServiceImpl implements UserService {
                 .gender(registerUserRequest.getGender())
                 .dateOfBirth(registerUserRequest.getDateOfBirth())
                 .build();
-        log.info("user before save: {}" , user);
+        log.info("user before save: {}", user);
         userRepository.save(user);
         return authenticationDto;
     }
@@ -121,13 +126,48 @@ public class UserServiceImpl implements UserService {
         log.info("email: " + email);
         final Optional<User> byEmail = userRepository.findByEmail(email);
         if (byEmail.isPresent()) {
-            final Trainer trainer = trainerMapper.userToUserDto(trainerDto);
             final User user = byEmail.get();
-            trainer.setUser(user);
-            user.setTrainer(trainer);
+            if (user.getTrainer() == null) {
+                final Trainer trainer = trainerMapper.trainerDtoToTrainer(trainerDto);
+                trainer.setUser(user);
+                user.setTrainer(trainer);
+            } else {
+                final Trainer trainer = user.getTrainer();
+                trainer.setDescription(trainerDto.getDescription());
+                trainer.setExperience(trainerDto.getExperience());
+                trainer.setSpecializations(trainerDto.getSpecializations());
+                trainer.setIsProfileActive(trainerDto.isProfileActive());
+                trainerRepository.save(trainer);
+            }
             userRepository.save(user);
         } else {
-            log.error("nie znaleziono profilu usera");
+            log.error("nie znaleziono profilu po email: " + email);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void postClient(final String token, final ClientDto clientDto) {
+        final String email = authClient.authorize(token).email();
+        log.info("email: " + email);
+        final Optional<User> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isPresent()) {
+            final User user = byEmail.get();
+            if (user.getClient() == null) {
+                final Client client = clientMapper.clientDtoToClient(clientDto);
+                client.setUser(user);
+                user.setClient(client);
+            } else {
+                final Client client = user.getClient();
+                client.setBio(clientDto.getBio());
+                client.setGoals(clientDto.getGoals());
+                client.setFitnessLevel(clientDto.getFitnessLevel());
+                clientRepository.save(client);
+            }
+            userRepository.save(user);
+            log.info("User:\n" + user);
+        } else {
+            log.error("nie znaleziono profilu po email: " + email);
         }
     }
 }

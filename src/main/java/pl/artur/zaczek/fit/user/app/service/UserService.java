@@ -27,5 +27,7 @@ public interface UserService {
 
     void postTrainer(String token, TrainerDto trainerDto);
 
+    void postClient(String token, ClientDto clientDto);
+
     void postUser(UserDto userDto);
 }

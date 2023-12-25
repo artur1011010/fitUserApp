@@ -56,26 +56,33 @@ public class UserController {
         return ResponseEntity.ok(userService.getMe(token));
     }
 
-    @GetMapping("me/trainer")
+    @GetMapping("trainer")
     public ResponseEntity<TrainerDto> getMeTrainerData(@RequestHeader(name = "Authorization") final String token) {
-        log.info("GET user/me/trainer, token: {}", token);
+        log.info("GET user/trainer, token: {}", token);
         final TrainerDto response = userService.getMeTrainer(token);
         log.info("returning: {}", response);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("me/client")
+    @GetMapping("client")
     public ResponseEntity<ClientDto> getMeClientData(@RequestHeader(name = "Authorization") final String token) {
-        log.info("GET user/me/client, token: {}", token);
+        log.info("GET user/client, token: {}", token);
         final ClientDto response = userService.getMeClient(token);
         log.info("returning: {}", response);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/trainer")
-    public ResponseEntity<Void> postTrainerProfile(@RequestHeader(name = "Authorization") final String token, @RequestBody final TrainerDto trainerDto) {
-        log.info("GET user/me/client, token: {}\ntrainerDto: {}", token, trainerDto);
+    public ResponseEntity<Void> postTrainerProfile(@RequestBody final TrainerDto trainerDto, @RequestHeader(name = "Authorization") final String token) {
+        log.info("POST user/trainer, token: {}\ntrainerDto: {}", token, trainerDto);
         userService.postTrainer(token, trainerDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/client")
+    public ResponseEntity<Void> postClientProfile(@RequestBody final ClientDto clientDto, @RequestHeader(name = "Authorization") final String token) {
+        log.info("POST user/client: clientDto: {}", clientDto);
+        userService.postClient(token, clientDto);
         return ResponseEntity.ok().build();
     }
 

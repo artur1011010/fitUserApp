@@ -8,7 +8,7 @@ import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
 @Component
 @Slf4j
 public class TrainerMapper {
-    public Trainer userToUserDto(final TrainerDto dto) {
+    public Trainer trainerDtoToTrainer(final TrainerDto dto) {
         return Trainer.builder()
                 .id(dto.getId())
                 .description(dto.getDescription())
