@@ -15,4 +15,5 @@ public class TrainerDto {
     private int experience;
     private String specializations;
     private boolean isProfileActive;
+    private String userName;
 }

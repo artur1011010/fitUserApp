@@ -45,24 +45,26 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public AuthenticationDto registerNewUser(final RegisterUserRequest registerUserRequest) {
-        final RegisterRequest request = RegisterRequest.builder()
-                .email(registerUserRequest.getEmail())
-                .role(Role.USER)
-                .password(registerUserRequest.getPassword())
-                .build();
-
-        final AuthenticationDto authenticationDto = authClient.register(request);
-
-        final User user = User.builder()
-                .name(registerUserRequest.getName())
-                .email(registerUserRequest.getEmail())
-                .phoneNumber(registerUserRequest.getPhoneNumber())
-                .gender(registerUserRequest.getGender())
-                .dateOfBirth(registerUserRequest.getDateOfBirth())
-                .build();
-        log.info("user before save: {}", user);
-        userRepository.save(user);
-        return authenticationDto;
+        Optional<User> byEmail = userRepository.findByEmail(registerUserRequest.getEmail());
+        if (byEmail.isEmpty()) {
+            final RegisterRequest request = RegisterRequest.builder()
+                    .email(registerUserRequest.getEmail())
+                    .role(Role.USER)
+                    .password(registerUserRequest.getPassword())
+                    .build();
+            final AuthenticationDto authenticationDto = authClient.register(request);
+            final User user = User.builder()
+                    .name(registerUserRequest.getName())
+                    .email(registerUserRequest.getEmail())
+                    .phoneNumber(registerUserRequest.getPhoneNumber())
+                    .gender(registerUserRequest.getGender())
+                    .dateOfBirth(registerUserRequest.getDateOfBirth())
+                    .build();
+            log.info("user before save: {}", user);
+            userRepository.save(user);
+            return authenticationDto;
+        }
+        throw new BadRequestException("User already exist");
     }
 
     @Override

@@ -17,4 +17,15 @@ public class TrainerMapper {
                 .isProfileActive(dto.isProfileActive())
                 .build();
     }
+
+    public TrainerDto trainerToTrainerDto(final Trainer entity) {
+        return TrainerDto.builder()
+                .id(entity.getId())
+                .description(entity.getDescription())
+                .experience(entity.getExperience())
+                .specializations(entity.getSpecializations())
+                .isProfileActive(entity.getIsProfileActive())
+                .userName(entity.getUser().getName())
+                .build();
+    }
 }
