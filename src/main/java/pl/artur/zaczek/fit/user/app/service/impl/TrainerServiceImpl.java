@@ -36,6 +36,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .experience(24)
                 .description("Jestem Trenerem Personalnym Terapeutycznym wad postawy Pracuje nad poprawą ruchomości i mobilności ciała.Prowadzę zajęcia usprawniające Stretching,rozluźnianie zmęczonych mięśni,Zdrowy Kręgosłup,Pilat")
                 .isProfileActive(true)
+                .photoNo(1)
                 .specializations("Trener sportowy, Rozciąganie, Gimnastyka, Pilates, Aerobik")
                 .build();
 
@@ -43,6 +44,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .experience(24)
                 .description("Jestem Trenerem Personalnym Terapeutycznym wad postawy Pracuje nad poprawą ruchomości i mobilności ciała.Prowadzę zajęcia usprawniające Stretching,rozluźnianie zmęczonych mięśni,Zdrowy Kręgosłup,Pilat")
                 .isProfileActive(true)
+                .photoNo(2)
                 .specializations("Kondycja fizyczna, Budowanie mięśni,Body combat\n")
                 .build();
 
@@ -50,6 +52,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .experience(24)
                 .description("Jestem Trenerem Personalnym Terapeutycznym wad postawy Pracuje nad poprawą ruchomości i mobilności ciała.Prowadzę zajęcia usprawniające Stretching,rozluźnianie zmęczonych mięśni,Zdrowy Kręgosłup,Pilat")
                 .isProfileActive(true)
+                .photoNo(3)
                 .specializations("Trener sportowy, Rozciąganie, Gimnastyka, Pilates, Aerobik")
                 .build();
 
@@ -57,6 +60,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .experience(24)
                 .description("Trener personalny oraz instruktor fitness Łódź. Prowadzenie online i stacjonarnie w Łodzi.")
                 .isProfileActive(true)
+                .photoNo(4)
                 .specializations("Trener sportowy, Budowanie mięśni, Kulturystyka, Cross training")
                 .build();
 
@@ -64,6 +68,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .experience(24)
                 .description("Jestem studentem 4 roku medycyny na kierunku lekarskim. Wiele lat na macie, siłowni i z nosem w mądrych książkach, dają mi wiedzę i doświadczenie, by poprowadzić cię sportową drogą.")
                 .isProfileActive(true)
+                .photoNo(5)
                 .specializations("Fitness, Rozciąganie, Gimnastyka, Pilates, Aerobik")
                 .build();
 
@@ -71,6 +76,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .experience(24)
                 .description("Jestem trenerem personalnym, instruktorem fitness, koordynatorem strefy fitness oraz mentorem zdrowej zbilansowanej diety. Wieloletnie doświadczenie\n")
                 .isProfileActive(true)
+                .photoNo(6)
                 .specializations("Kondycja fizyczna, Fitness, Gimnastyka, Pilates,Budowanie mięśni, Aerobik, Pośladki, brzuch i uda")
                 .build();
 
@@ -78,6 +84,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .trainer(trainer)
                 .email("mail@op.pl")
                 .name("Adam Trener")
+                .phoneNumber("+48 500 200 222")
                 .build();
         trainer.setUser(user);
 
@@ -85,6 +92,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .trainer(trainer1)
                 .email("mail1@op.pl")
                 .name("Krystian Trener")
+                .phoneNumber("+48 500 200 222")
                 .build();
 
         trainer1.setUser(user1);
@@ -93,6 +101,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .trainer(trainer2)
                 .email("mail2@op.pl")
                 .name("Iga Świątek")
+                .phoneNumber("+48 500 200 222")
                 .build();
         trainer2.setUser(user2);
 
@@ -100,6 +109,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .trainer(trainer3)
                 .email("mail3@op.pl")
                 .name("Mikołaj student")
+                .phoneNumber("+48 500 200 222")
                 .build();
         trainer3.setUser(user3);
 
@@ -107,6 +117,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .trainer(trainer4)
                 .email("mail4@op.pl")
                 .name("Aneta gimnastyka")
+                .phoneNumber("+48 500 200 222")
                 .build();
         trainer4.setUser(user4);
 

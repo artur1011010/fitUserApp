@@ -15,6 +15,7 @@ public class TrainerMapper {
                 .experience(dto.getExperience())
                 .specializations(dto.getSpecializations())
                 .isProfileActive(dto.isProfileActive())
+                .photoNo(dto.getPhotoNo())
                 .build();
     }
 
@@ -26,6 +27,9 @@ public class TrainerMapper {
                 .specializations(entity.getSpecializations())
                 .isProfileActive(entity.getIsProfileActive())
                 .userName(entity.getUser().getName())
+                .phoneNumber(entity.getUser().getPhoneNumber())
+                .email(entity.getUser().getEmail())
+                .photoNo(entity.getPhotoNo())
                 .build();
     }
 }

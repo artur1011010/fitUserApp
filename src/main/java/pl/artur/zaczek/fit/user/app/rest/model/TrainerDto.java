@@ -15,5 +15,9 @@ public class TrainerDto {
     private int experience;
     private String specializations;
     private boolean isProfileActive;
+    private String email;
+    private String phoneNumber;
     private String userName;
+    private int photoNo;
+    private RatingDto rating;
 }

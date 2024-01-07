@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import pl.artur.zaczek.fit.user.app.utilis.model.Gender;
-import pl.artur.zaczek.fit.user.app.utilis.model.Role;
 
 import java.time.LocalDate;
 
@@ -23,6 +22,7 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(unique=true)
     private String email;
     private String phoneNumber;
     @Enumerated(EnumType.STRING)

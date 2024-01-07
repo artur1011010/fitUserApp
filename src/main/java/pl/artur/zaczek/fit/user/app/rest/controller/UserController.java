@@ -53,7 +53,9 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<UserDto> getMe(@RequestHeader(name = "Authorization") final String token) {
         log.info("GET user/me, token: {}", token);
-        return ResponseEntity.ok(userService.getMe(token));
+        final UserDto userDto = userService.getMe(token);
+        log.info("returning: {}", userDto);
+        return ResponseEntity.ok(userDto);
     }
 
     @GetMapping("trainer")

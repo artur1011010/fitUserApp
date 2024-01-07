@@ -16,6 +16,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 8000)
     private String bio;
     private String goals;
     @Enumerated(EnumType.STRING)
