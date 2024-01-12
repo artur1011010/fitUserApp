@@ -2,6 +2,7 @@ package pl.artur.zaczek.fit.user.app.mapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Opinion;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
 import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
 import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
@@ -32,6 +33,7 @@ public class UserMapper {
                         .experience(userEntity.getTrainer().getExperience())
                         .specializations(userEntity.getTrainer().getSpecializations())
                         .description(userEntity.getTrainer().getDescription())
+                        .rating(userEntity.getTrainer().getOpinions().stream().mapToDouble(Opinion::getRating).average().orElse(0.0))
                         .build())
                 .build();
     }

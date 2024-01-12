@@ -1,23 +1,22 @@
 package pl.artur.zaczek.fit.user.app.rest.model;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class TrainerDto {
+public class OpinionDto {
     private Long id;
-    private String description;
-    private int experience;
-    private String specializations;
-    private boolean isProfileActive;
-    private String email;
-    private String phoneNumber;
+    private LocalDateTime addedDate;
     private String userName;
-    private int photoNo;
+    private String userEmail;
     private double rating;
+    private String content;
 }

@@ -19,7 +19,7 @@ public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 8000)
+    @Column(columnDefinition="TEXT", length = 8000)
     private String description;
     private int experience;
     private String specializations;
@@ -31,5 +31,5 @@ public class Trainer {
     private User user;
     @OneToMany
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Rating> ratings = new ArrayList<>();
+    private List<Opinion> opinions = new ArrayList<>();
 }

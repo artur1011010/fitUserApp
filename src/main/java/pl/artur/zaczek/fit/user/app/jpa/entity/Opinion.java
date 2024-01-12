@@ -6,16 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "RATINGS")
-public class Rating {
+@Table(name = "OPINIONS")
+public class Opinion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private int rating;
+    private LocalDateTime addedDate;
+    private String userName;
+    private String userEmail;
+    private double rating;
+    @Column(columnDefinition="TEXT", length = 8000)
+    private String content;
 }
