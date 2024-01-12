@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class TrainerDto {
+public class TrainerDetails {
     private Long id;
     private String description;
     private int experience;
@@ -20,4 +22,5 @@ public class TrainerDto {
     private String userName;
     private int photoNo;
     private double rating;
+    private List<OpinionDto> opinions;
 }

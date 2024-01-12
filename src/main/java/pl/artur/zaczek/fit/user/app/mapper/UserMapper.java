@@ -2,6 +2,7 @@ package pl.artur.zaczek.fit.user.app.mapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Opinion;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
 import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
 import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
@@ -19,7 +20,6 @@ public class UserMapper {
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .phoneNumber(userEntity.getPhoneNumber())
-                .avatar(userEntity.getAvatar())
                 .gender(userEntity.getGender())
                 .clientDto(userEntity.getClient() == null ? null : ClientDto.builder()
                         .bio(userEntity.getClient().getBio())
@@ -33,6 +33,7 @@ public class UserMapper {
                         .experience(userEntity.getTrainer().getExperience())
                         .specializations(userEntity.getTrainer().getSpecializations())
                         .description(userEntity.getTrainer().getDescription())
+                        .rating(userEntity.getTrainer().getOpinions().stream().mapToDouble(Opinion::getRating).average().orElse(0.0))
                         .build())
                 .build();
     }
@@ -43,11 +44,9 @@ public class UserMapper {
                 .id(userDto.getId())
                 .name(userDto.getName())
                 .phoneNumber(userDto.getPhoneNumber())
-                .avatar(userDto.getAvatar())
                 .gender(userDto.getGender())
                 .email(userDto.getEmail())
                 .dateOfBirth(userDto.getDateOfBirth())
                 .build();
     }
-
 }
