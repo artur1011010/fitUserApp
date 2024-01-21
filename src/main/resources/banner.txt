@@ -3,5 +3,7 @@
  )__)  _)(_   )(   )  (  )__) \__ \\__ \   )(__)( \__ \ )__)  )   /   /(__)\  )___/ )___/
 (__)  (____) (__) (_)\_)(____)(___/(___/  (______)(___/(____)(_)\_)  (__)(__)(__)  (__)
 
+author: Artur Zaczek
+
 ${application.title} ${application.version}
 Powered by Spring Boot ${spring-boot.version}

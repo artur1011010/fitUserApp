@@ -40,7 +40,8 @@ public class UserAuthClient {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(Mono.just(authenticationRequest), AuthenticationRequest.class)
                 .retrieve()
-                .bodyToMono(AuthenticationDto.class).block();
+                .bodyToMono(AuthenticationDto.class)
+                .block();
     }
 
     public AuthorizationDto authorize(final String token) {

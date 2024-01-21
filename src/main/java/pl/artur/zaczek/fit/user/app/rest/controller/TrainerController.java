@@ -2,12 +2,17 @@ package pl.artur.zaczek.fit.user.app.rest.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.artur.zaczek.fit.user.app.jpa.entity.File;
 import pl.artur.zaczek.fit.user.app.rest.model.TrainerDetails;
 import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
 import pl.artur.zaczek.fit.user.app.service.TrainerService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController

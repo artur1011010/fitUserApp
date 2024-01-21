@@ -19,8 +19,6 @@ public class SwaggerConfig {
                 .title("Fitness User API")
                 .description("Rest API for fitness user app")
                 .license("GNU General Public License v3.0")
-                //todo do poprawy
-                .licenseUrl("https://github.com/WarsztatUL/car-mechanic-api/blob/master/LICENSE")
                 .termsOfServiceUrl("")
                 .version("0.0.3")
                 .contact(new Contact("", "", "ul0255225@edu.uni.lodz.pl"))
