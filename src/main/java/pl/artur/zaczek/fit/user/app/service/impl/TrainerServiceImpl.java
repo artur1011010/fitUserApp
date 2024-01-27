@@ -5,11 +5,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.artur.zaczek.fit.user.app.jpa.entity.File;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Photo;
 import pl.artur.zaczek.fit.user.app.jpa.entity.Opinion;
 import pl.artur.zaczek.fit.user.app.jpa.entity.Trainer;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
-import pl.artur.zaczek.fit.user.app.jpa.repository.FileRepository;
+import pl.artur.zaczek.fit.user.app.jpa.repository.PhotoRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.TrainerRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.UserRepository;
 import pl.artur.zaczek.fit.user.app.mapper.TrainerMapper;
@@ -33,7 +33,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     private final TrainerRepository trainerRepository;
     private final UserRepository userRepository;
-    private final FileRepository fileRepository;
+    private final PhotoRepository fileRepository;
     private final TrainerMapper trainerMapper;
     private final UserAuthClient authClient;
 
@@ -52,11 +52,11 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public void postOpinion(final String token, final long id, final OpinionDto opinionDto) {
+    public void postOpinion(final String token, final long trainerId, final OpinionDto opinionDto) {
         final String email = authClient.authorize(token).email();
         log.info("email: " + email);
         final Trainer trainer = trainerRepository
-                .findById(id).orElseThrow(() -> new BadRequestException("Trainer not found by provided id: " + id));
+                .findById(trainerId).orElseThrow(() -> new BadRequestException("Trainer not found by provided id: " + trainerId));
         final User user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new BadRequestException("User not found by provided email"));
@@ -81,14 +81,14 @@ public class TrainerServiceImpl implements TrainerService {
                 .findByEmail(email)
                 .orElseThrow(() -> new BadRequestException("User not found by provided email"));
 
-        final Optional<File> ownerEmail = fileRepository.findByOwnerEmail(email);
-        final File newPhoto;
+        final Optional<Photo> ownerEmail = fileRepository.findByOwnerEmail(email);
+        final Photo newPhoto;
         if (ownerEmail.isPresent()) {
             newPhoto = ownerEmail.get();
             newPhoto.setData(file.getBytes());
             newPhoto.setFileName(file.getName());
         } else {
-            newPhoto = new File();
+            newPhoto = new Photo();
             newPhoto.setFileName(file.getName());
             newPhoto.setData(file.getBytes());
             newPhoto.setOwnerEmail(email);
@@ -98,7 +98,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public File downloadFile(final String token) {
+    public Photo downloadFile(final String token) {
         final String email = authClient.authorize(token).email();
         log.info("email: " + email);
         userRepository

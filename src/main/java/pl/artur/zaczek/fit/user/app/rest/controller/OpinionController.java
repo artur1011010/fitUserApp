@@ -16,10 +16,9 @@ public class OpinionController {
 
     private final TrainerService trainerService;
 
-
-    @PostMapping("/{id}")
-    public ResponseEntity<Void> addNewOpinion (@RequestHeader(name = "Authorization") final String token, @PathVariable long id, @RequestBody OpinionDto opinionDto){
-        trainerService.postOpinion(token, id, opinionDto);
+    @PostMapping("/{trainerId}")
+    public ResponseEntity<Void> addNewOpinion(@RequestHeader(name = "Authorization") final String token, @PathVariable final long trainerId, @RequestBody final OpinionDto opinionDto) {
+        trainerService.postOpinion(token, trainerId, opinionDto);
         return ResponseEntity.ok().build();
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.artur.zaczek.fit.user.app.jpa.entity.File;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Photo;
 import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
 import pl.artur.zaczek.fit.user.app.rest.model.RegisterUserRequest;
 import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
@@ -96,6 +96,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @Deprecated
     @PostMapping
     public ResponseEntity<Void> postUser(final UserDto userDto) {
         userService.postUser(userDto);
@@ -111,7 +112,7 @@ public class UserController {
 
     @GetMapping("/download")
     public ResponseEntity<Resource> downloadImage(@RequestHeader(name = "Authorization") final String token) {
-        final File data = trainerService.downloadFile(token);
+        final Photo data = trainerService.downloadFile(token);
         final ByteArrayResource resource = new ByteArrayResource(data.getData());
         return ResponseEntity
                 .ok()

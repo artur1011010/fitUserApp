@@ -9,11 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.multipart.MultipartFile;
-import pl.artur.zaczek.fit.user.app.jpa.entity.File;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Photo;
 import pl.artur.zaczek.fit.user.app.jpa.entity.Opinion;
 import pl.artur.zaczek.fit.user.app.jpa.entity.Trainer;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
-import pl.artur.zaczek.fit.user.app.jpa.repository.FileRepository;
+import pl.artur.zaczek.fit.user.app.jpa.repository.PhotoRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.TrainerRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.UserRepository;
 import pl.artur.zaczek.fit.user.app.mapper.TrainerMapper;
@@ -48,7 +48,7 @@ class TrainerServiceImplTest {
     private UserRepository userRepository;
 
     @Mock
-    private FileRepository fileRepository;
+    private PhotoRepository fileRepository;
 
     @Mock
     private UserAuthClient userAuthClient;
@@ -145,13 +145,13 @@ class TrainerServiceImplTest {
     void shouldUploadNewPhotoWhenUserExistsAndNoPhoto() throws IOException {
         when(fileRepository.findByOwnerEmail(email)).thenReturn(Optional.empty());
         trainerService.uploadPhoto(file, token);
-        verify(fileRepository, times(1)).save(any(File.class));
+        verify(fileRepository, times(1)).save(any(Photo.class));
     }
 
     @Test
     @DisplayName("Should update photo when user exists and already has a photo")
     void shouldUpdatePhotoWhenUserExistsAndHasPhoto() throws IOException {
-        final File existingPhoto = new File();
+        final Photo existingPhoto = new Photo();
         existingPhoto.setOwnerEmail(email);
         when(fileRepository.findByOwnerEmail(email)).thenReturn(Optional.of(existingPhoto));
         trainerService.uploadPhoto(file, token);
@@ -163,7 +163,7 @@ class TrainerServiceImplTest {
     void shouldThrowBadRequestExceptionWhenUserDoesNotExist() {
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
         assertThrows(BadRequestException.class, () -> trainerService.uploadPhoto(file, token));
-        verify(fileRepository, never()).save(any(File.class));
+        verify(fileRepository, never()).save(any(Photo.class));
     }
 
     @Test
@@ -171,20 +171,20 @@ class TrainerServiceImplTest {
     void shouldThrowUnauthorizedExceptionWhenTokenIsInvalid() {
         when(userAuthClient.authorize(token)).thenThrow(new ForbiddenException("Invalid token"));
         assertThrows(ForbiddenException.class, () -> trainerService.uploadPhoto(file, token));
-        verify(fileRepository, never()).save(any(File.class));
+        verify(fileRepository, never()).save(any(Photo.class));
         verify(userRepository, never()).findByEmail(email);
     }
 
     @Test
     @DisplayName("Should download file when user exists and has a photo")
     void shouldDownloadFileWhenUserExistsAndHasAPhoto() {
-        final File expectedFile = new File();
-        expectedFile.setOwnerEmail(email);
-        when(fileRepository.findByOwnerEmail(email)).thenReturn(Optional.of(expectedFile));
-        final File actualFile = trainerService.downloadFile(token);
+        final Photo expectedPhoto = new Photo();
+        expectedPhoto.setOwnerEmail(email);
+        when(fileRepository.findByOwnerEmail(email)).thenReturn(Optional.of(expectedPhoto));
+        final Photo actualPhoto = trainerService.downloadFile(token);
 
-        assertNotNull(actualFile);
-        assertEquals(expectedFile, actualFile);
+        assertNotNull(actualPhoto);
+        assertEquals(expectedPhoto, actualPhoto);
     }
 
     @Test

@@ -12,7 +12,4 @@ public class BadRequestException extends BaseApiError {
         super(message, HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
-    public BadRequestException(String message, String code, String details) {
-        super(message, code, details);
-    }
 }

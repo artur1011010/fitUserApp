@@ -12,7 +12,4 @@ public class NotFoundException extends BaseApiError {
         super(message, HttpStatus.NOT_FOUND.getReasonPhrase());
     }
 
-    public NotFoundException(String message, String details) {
-        super(message, HttpStatus.NOT_FOUND.getReasonPhrase(), details);
-    }
 }

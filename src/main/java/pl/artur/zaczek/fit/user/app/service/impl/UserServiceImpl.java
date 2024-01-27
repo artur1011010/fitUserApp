@@ -14,6 +14,7 @@ import pl.artur.zaczek.fit.user.app.mapper.ClientMapper;
 import pl.artur.zaczek.fit.user.app.mapper.TrainerMapper;
 import pl.artur.zaczek.fit.user.app.mapper.UserMapper;
 import pl.artur.zaczek.fit.user.app.rest.error.BadRequestException;
+import pl.artur.zaczek.fit.user.app.rest.error.InternalServerErrorException;
 import pl.artur.zaczek.fit.user.app.rest.error.NotFoundException;
 import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
 import pl.artur.zaczek.fit.user.app.rest.model.RegisterUserRequest;
@@ -143,7 +144,9 @@ public class UserServiceImpl implements UserService {
             }
             userRepository.save(user);
         } else {
-            log.error("nie znaleziono profilu po email: " + email);
+            final String errorMessage = String.format("Could not find profile by provided email: %s", email);
+            log.error(errorMessage);
+            throw new InternalServerErrorException(errorMessage);
         }
     }
 
@@ -169,7 +172,9 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             log.info("User:\n" + user);
         } else {
-            log.error("nie znaleziono profilu po email: " + email);
+            final String errorMessage = String.format("Could not find profile by provided email: %s", email);
+            log.error(errorMessage);
+            throw new InternalServerErrorException(errorMessage);
         }
     }
 }
