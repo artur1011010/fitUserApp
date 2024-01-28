@@ -121,7 +121,7 @@ class TrainerServiceImplTest {
         when(trainerRepository.findById(1L)).thenReturn(Optional.empty());
         final NotFoundException notFoundException = assertThrows(NotFoundException.class,
                 () -> trainerService.getTrainerDetailsById(1));
-        assertEquals("Trainer not found by provided id", notFoundException.getMessage());
+        assertEquals("Trainer not found by provided id: 1", notFoundException.getMessage());
         assertEquals(HttpStatus.NOT_FOUND.getReasonPhrase(), notFoundException.getCode());
     }
 
@@ -181,7 +181,7 @@ class TrainerServiceImplTest {
         final Photo expectedPhoto = new Photo();
         expectedPhoto.setOwnerEmail(email);
         when(fileRepository.findByOwnerEmail(email)).thenReturn(Optional.of(expectedPhoto));
-        final Photo actualPhoto = trainerService.downloadFile(token);
+        final Photo actualPhoto = trainerService.downloadFile(email);
 
         assertNotNull(actualPhoto);
         assertEquals(expectedPhoto, actualPhoto);

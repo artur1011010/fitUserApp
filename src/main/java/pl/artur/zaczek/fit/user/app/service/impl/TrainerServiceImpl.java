@@ -48,7 +48,7 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerDetails getTrainerDetailsById(final long id) {
         return trainerMapper.trainerToTrainerDetails(trainerRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException("Trainer not found by provided id")));
+                .orElseThrow(() -> new NotFoundException(String.format("Trainer not found by provided id: %s", id))));
     }
 
     @Override
@@ -56,10 +56,10 @@ public class TrainerServiceImpl implements TrainerService {
         final String email = authClient.authorize(token).email();
         log.info("email: " + email);
         final Trainer trainer = trainerRepository
-                .findById(trainerId).orElseThrow(() -> new BadRequestException("Trainer not found by provided id: " + trainerId));
+                .findById(trainerId).orElseThrow(() -> new BadRequestException(String.format("Trainer not found by provided id: %s", trainerId)));
         final User user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new BadRequestException("User not found by provided email"));
+                .orElseThrow(() -> new BadRequestException(String.format("User not found by provided email: %s", email)));
         final Opinion newOpinion = Opinion
                 .builder()
                 .userName(user.getName())
@@ -79,7 +79,7 @@ public class TrainerServiceImpl implements TrainerService {
         log.info("email: " + email);
         userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new BadRequestException("User not found by provided email"));
+                .orElseThrow(() -> new BadRequestException(String.format("User not found by provided email: %s", email)));
 
         final Optional<Photo> ownerEmail = fileRepository.findByOwnerEmail(email);
         final Photo newPhoto;
@@ -98,12 +98,11 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public Photo downloadFile(final String token) {
-        final String email = authClient.authorize(token).email();
+    public Photo downloadFile(final String email) {
         log.info("email: " + email);
         userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new BadRequestException("User not found by provided email"));
+                .orElseThrow(() -> new BadRequestException(String.format("User not found by provided email: %s", email)));
 
         return fileRepository.findByOwnerEmail(email)
                 .orElseThrow(() -> new BadRequestException("Trainer has no photo"));

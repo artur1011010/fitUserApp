@@ -20,5 +20,5 @@ public interface TrainerService {
 
     void uploadPhoto(MultipartFile file, String token) throws IOException;
 
-    Photo downloadFile(String token);
+    Photo downloadFile(String email);
 }

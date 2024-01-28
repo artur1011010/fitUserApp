@@ -111,8 +111,8 @@ public class UserController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> downloadImage(@RequestHeader(name = "Authorization") final String token) {
-        final Photo data = trainerService.downloadFile(token);
+    public ResponseEntity<Resource> downloadImage(@RequestHeader(name = "Email") final String email) {
+        final Photo data = trainerService.downloadFile(email);
         final ByteArrayResource resource = new ByteArrayResource(data.getData());
         return ResponseEntity
                 .ok()

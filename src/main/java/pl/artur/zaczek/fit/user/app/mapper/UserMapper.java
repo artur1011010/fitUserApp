@@ -34,6 +34,9 @@ public class UserMapper {
                         .specializations(userEntity.getTrainer().getSpecializations())
                         .description(userEntity.getTrainer().getDescription())
                         .rating(userEntity.getTrainer().getOpinions().stream().mapToDouble(Opinion::getRating).average().orElse(0.0))
+                        .email(userEntity.getEmail())
+                        .phoneNumber(userEntity.getPhoneNumber())
+                        .userName(userEntity.getName())
                         .build())
                 .build();
     }
