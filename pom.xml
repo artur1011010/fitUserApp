@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>pl.artur.zaczek</groupId>
 	<artifactId>fitUserApp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<name>fitUserApp</name>
 	<description>fitness User App</description>
 	<properties>
