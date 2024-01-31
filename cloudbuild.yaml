@@ -1,5 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/mvn'
     args: ['install']
-logsBucket: '_Default'
+options:
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
 serviceAccount: 'sublime-lyceum-412618@appspot.gserviceaccount.com'
