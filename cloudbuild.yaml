@@ -1,4 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/mvn'
     args: ['install']
+logsBucket: '_Default'
 serviceAccount: 'sublime-lyceum-412618@appspot.gserviceaccount.com'
