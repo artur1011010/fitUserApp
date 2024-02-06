@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "TRAINERS")
+@Table(schema = "fit_user_db", name = "TRAINERS")
 public class Trainer {
 
     @Id

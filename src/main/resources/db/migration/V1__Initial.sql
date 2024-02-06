@@ -1,6 +1,1 @@
-CREATE DATABASE "fitUserDb"
-    WITH
-    OWNER = root
-    ENCODING = 'UTF8'
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+CREATE SCHEMA "fit_user_db";

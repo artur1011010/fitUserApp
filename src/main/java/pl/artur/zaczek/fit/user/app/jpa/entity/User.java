@@ -15,14 +15,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "USERS")
-public class User{
+@Table(schema = "fit_user_db", name = "USERS")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(unique=true)
+    @Column(unique = true)
     private String email;
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
