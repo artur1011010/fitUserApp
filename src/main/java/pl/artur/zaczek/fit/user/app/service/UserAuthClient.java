@@ -1,6 +1,9 @@
 package pl.artur.zaczek.fit.user.app.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -15,15 +18,11 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class UserAuthClient {
     private final WebClient webClient;
-
-//    @Value("${application.security.url}")
-    private final String authUrl = "http://localhost:8082/api/v1/auth";
-    private final String AUTHORIZATION_HEADER = "Authorization";
-
+    private final String url  = System.getenv("AUTH_URL");
 
     public UserAuthClient(final WebClient.Builder webClientBuilder) {
-        log.info("Creating userAuth client with url: {}" , authUrl);
-        this.webClient = webClientBuilder.baseUrl(authUrl).build();
+        log.info("Creating userAuth client with url: {}", url);
+        this.webClient = webClientBuilder.baseUrl(url).build();
     }
 
     public AuthenticationDto register(final RegisterRequest registerRequest) {
@@ -45,6 +44,7 @@ public class UserAuthClient {
     }
 
     public AuthorizationDto authorize(final String token) {
+        String AUTHORIZATION_HEADER = "Authorization";
         return this.webClient.get().uri("/authorize", token)
                 .header(AUTHORIZATION_HEADER, token)
                 .retrieve().bodyToMono(AuthorizationDto.class)

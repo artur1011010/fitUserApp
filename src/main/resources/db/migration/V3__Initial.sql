@@ -1,0 +1,1 @@
+CREATE SCHEMA "fit_offer_db";
