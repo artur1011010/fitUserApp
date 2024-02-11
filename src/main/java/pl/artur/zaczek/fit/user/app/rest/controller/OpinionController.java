@@ -11,7 +11,7 @@ import pl.artur.zaczek.fit.user.app.service.TrainerService;
 @RequestMapping("/opinion")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class OpinionController {
 
     private final TrainerService trainerService;

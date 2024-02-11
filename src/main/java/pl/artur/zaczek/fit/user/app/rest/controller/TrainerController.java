@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/trainer")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class TrainerController {
 
     private final TrainerService trainerService;
