@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>pl.artur.zaczek</groupId>
 	<artifactId>fitUserApp</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.2</version>
 	<name>fitUserApp</name>
 	<description>fitness User App</description>
 	<properties>
@@ -107,21 +107,20 @@
 		<dependency>
 			<groupId>org.spockframework</groupId>
 			<artifactId>spock-spring</artifactId>
-			<version>2.4-M1-groovy-4.0</version>
+			<version>2.2-M1-groovy-3.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.spockframework</groupId>
 			<artifactId>spock-core</artifactId>
-			<version>2.4-M1-groovy-4.0</version>
+			<version>2.2-M1-groovy-3.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.groovy</groupId>
+			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>4.0.18</version>
+			<version>3.0.9</version>
 			<type>pom</type>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

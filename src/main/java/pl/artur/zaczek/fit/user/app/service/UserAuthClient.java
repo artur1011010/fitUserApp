@@ -1,9 +1,6 @@
 package pl.artur.zaczek.fit.user.app.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class UserAuthClient {
     private final WebClient webClient;
-    private final String url  = System.getenv("AUTH_URL");
+    private final String url  = System.getenv("AUTH_URL") + "/api/v1/auth";
 
     public UserAuthClient(final WebClient.Builder webClientBuilder) {
         log.info("Creating userAuth client with url: {}", url);
