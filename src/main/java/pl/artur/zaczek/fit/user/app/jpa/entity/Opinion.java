@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(schema = "fit_user_db", name = "OPINIONS")
+@Table(name = "OPINIONS")
 public class Opinion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

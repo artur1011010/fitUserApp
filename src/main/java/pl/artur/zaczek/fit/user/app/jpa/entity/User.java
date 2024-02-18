@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(schema = "fit_user_db", name = "USERS")
+@Table(name = "USERS")
 public class User {
 
     @Id

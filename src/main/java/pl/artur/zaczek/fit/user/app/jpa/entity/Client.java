@@ -10,7 +10,7 @@ import pl.artur.zaczek.fit.user.app.utilis.model.FitnessLevel;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(schema = "fit_user_db", name = "CLIENTS")
+@Table(name = "CLIENTS")
 public class Client {
 
     @Id

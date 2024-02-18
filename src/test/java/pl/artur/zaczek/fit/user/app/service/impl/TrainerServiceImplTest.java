@@ -101,7 +101,6 @@ class TrainerServiceImplTest {
         assertEquals("test@test.pl", trainerDto1.getEmail());
         assertEquals("userName1", trainerDto1.getUserName());
 
-
         final TrainerDto trainerDto2 = allTrainers.stream()
                 .filter(trainer -> trainer.getId() == 2L)
                 .findFirst().orElse(null);
@@ -112,7 +111,6 @@ class TrainerServiceImplTest {
         assertTrue(trainerDto2.isProfileActive());
         assertEquals("test2@test.pl", trainerDto2.getEmail());
         assertEquals("userName2", trainerDto2.getUserName());
-
     }
 
     @Test
