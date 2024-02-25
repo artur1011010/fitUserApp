@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>pl.artur.zaczek</groupId>
 	<artifactId>fitUserApp</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>fitUserApp</name>
 	<description>fitness User App</description>
 	<properties>
@@ -42,6 +42,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>3.2.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -100,25 +112,6 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.spockframework</groupId>
-			<artifactId>spock-spring</artifactId>
-			<version>2.4-M1-groovy-4.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.spockframework</groupId>
-			<artifactId>spock-core</artifactId>
-			<version>2.4-M1-groovy-4.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>4.0.18</version>
-			<type>pom</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
@@ -126,6 +119,12 @@
 		<dependency>
 			<groupId>org.mock-server</groupId>
 			<artifactId>mockserver-netty</artifactId>
+			<version>5.15.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mock-server</groupId>
+			<artifactId>mockserver-client-java</artifactId>
 			<version>5.15.0</version>
 			<scope>test</scope>
 		</dependency>

@@ -31,5 +31,4 @@ class TrainerMapperTest {
         Assertions.assertEquals(trainer.getDescription(), dto.getDescription());
         Assertions.assertEquals(trainer.getIsProfileActive(), dto.isProfileActive());
     }
-
 }

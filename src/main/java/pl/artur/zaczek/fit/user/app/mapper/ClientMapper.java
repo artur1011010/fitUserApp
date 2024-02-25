@@ -17,4 +17,13 @@ public class ClientMapper {
                 .goals(dto.getGoals())
                 .build();
     }
+
+    public ClientDto clientToClientDto(final Client entity) {
+        return ClientDto.builder()
+                .id(entity.getId())
+                .bio(entity.getBio())
+                .fitnessLevel(entity.getFitnessLevel())
+                .goals(entity.getGoals())
+                .build();
+    }
 }

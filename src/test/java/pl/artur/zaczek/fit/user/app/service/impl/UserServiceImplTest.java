@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Client;
+import pl.artur.zaczek.fit.user.app.jpa.entity.Trainer;
 import pl.artur.zaczek.fit.user.app.jpa.entity.User;
 import pl.artur.zaczek.fit.user.app.jpa.repository.ClientRepository;
 import pl.artur.zaczek.fit.user.app.jpa.repository.TrainerRepository;
@@ -14,17 +16,22 @@ import pl.artur.zaczek.fit.user.app.mapper.ClientMapper;
 import pl.artur.zaczek.fit.user.app.mapper.TrainerMapper;
 import pl.artur.zaczek.fit.user.app.mapper.UserMapper;
 import pl.artur.zaczek.fit.user.app.rest.error.BadRequestException;
+import pl.artur.zaczek.fit.user.app.rest.error.NotFoundException;
+import pl.artur.zaczek.fit.user.app.rest.model.ClientDto;
 import pl.artur.zaczek.fit.user.app.rest.model.RegisterUserRequest;
+import pl.artur.zaczek.fit.user.app.rest.model.TrainerDto;
 import pl.artur.zaczek.fit.user.app.rest.model.UserDto;
 import pl.artur.zaczek.fit.user.app.rest.model.auth.AuthenticationDto;
 import pl.artur.zaczek.fit.user.app.rest.model.auth.AuthenticationRequest;
 import pl.artur.zaczek.fit.user.app.rest.model.auth.AuthorizationDto;
 import pl.artur.zaczek.fit.user.app.rest.model.auth.RegisterRequest;
 import pl.artur.zaczek.fit.user.app.service.UserAuthClient;
+import pl.artur.zaczek.fit.user.app.utilis.model.FitnessLevel;
 import pl.artur.zaczek.fit.user.app.utilis.model.Gender;
 import pl.artur.zaczek.fit.user.app.utilis.model.Role;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,5 +123,45 @@ class UserServiceImplTest {
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(1, result.size());
+    }
+
+    @Test
+    public void getMeClientReturnCorrectDto()  {
+        final Client client = Client.builder().goals("test goals").fitnessLevel(FitnessLevel.ADVANCED).bio("test bio").build();
+        final User user1 = User.builder().id(3L).email(email).name("userName1").client(client).build();
+        when(authClient.authorize(any())).thenReturn(new AuthorizationDto(email, Role.USER));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user1));
+        final ClientDto response = userService.getMeClient("token");
+        assertEquals("test bio" , response.getBio());
+        assertEquals(FitnessLevel.ADVANCED , response.getFitnessLevel());
+        assertEquals("test goals" , response.getGoals());
+    }
+    @Test
+    public void getMeClientReturnNotFoundException() {
+        when(authClient.authorize(any())).thenReturn(new AuthorizationDto(email, Role.USER));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
+        final Exception exception = assertThrows(NotFoundException.class, () -> userService.getMeClient("token"));
+        assertEquals("User does not have client profile", exception.getMessage());
+    }
+
+    @Test
+    public void getMeTrainerReturnCorrectDto()  {
+        final Trainer trainer = Trainer.builder().description("test").specializations("test spec").isProfileActive(true).experience(36).opinions(new ArrayList<>()).build();
+        final User user1 = User.builder().id(3L).email(email).name("userName1").trainer(trainer).build();
+        trainer.setUser(user1);
+        when(authClient.authorize(any())).thenReturn(new AuthorizationDto(email, Role.USER));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user1));
+        final TrainerDto response = userService.getMeTrainer("token");
+        assertEquals("test" , response.getDescription());
+        assertTrue(response.isProfileActive());
+        assertEquals(36 , response.getExperience());
+        assertEquals("test spec" , response.getSpecializations());
+    }
+    @Test
+    public void getMeTrainerReturnNotFoundException() {
+        when(authClient.authorize(any())).thenReturn(new AuthorizationDto(email, Role.USER));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
+        final Exception exception = assertThrows(NotFoundException.class, () -> userService.getMeTrainer("token"));
+        assertEquals("User does not have trainer profile", exception.getMessage());
     }
 }

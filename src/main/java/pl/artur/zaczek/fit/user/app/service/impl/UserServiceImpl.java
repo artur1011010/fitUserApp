@@ -106,8 +106,8 @@ public class UserServiceImpl implements UserService {
         log.info("email: " + email);
         return userRepository
                 .findByEmail(email)
-                .map(userMapper::userToUserDto)
-                .map(UserDto::getTrainerDto)
+                .map(User::getTrainer)
+                .map(trainerMapper::trainerToTrainerDto)
                 .orElseThrow(() -> new NotFoundException("User does not have trainer profile"));
     }
 
@@ -117,14 +117,14 @@ public class UserServiceImpl implements UserService {
         log.info("email: " + email);
         return userRepository
                 .findByEmail(email)
-                .map(userMapper::userToUserDto)
-                .map(UserDto::getClientDto)
+                .map(User::getClient)
+                .map(clientMapper::clientToClientDto)
                 .orElseThrow(() -> new NotFoundException("User does not have client profile"));
     }
 
     @Override
     @Transactional
-    public void postTrainer(String token, TrainerDto trainerDto) {
+    public void postTrainer(final String token,final TrainerDto trainerDto) {
         final String email = authClient.authorize(token).email();
         log.info("email: " + email);
         final Optional<User> byEmail = userRepository.findByEmail(email);

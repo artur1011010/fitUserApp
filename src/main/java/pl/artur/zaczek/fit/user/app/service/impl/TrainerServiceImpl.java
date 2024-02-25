@@ -113,24 +113,24 @@ public class TrainerServiceImpl implements TrainerService {
         final Opinion opinion = Opinion.builder()
                 .rating(2)
                 .content("Drogi i słabo")
-                .userName("Halina")
+                .userName("USer 1")
                 .build();
         final Opinion opinion2 = Opinion.builder()
                 .rating(2.5)
                 .content("Słaby trener")
-                .userName("Przemek suchar")
+                .userName("User 2")
                 .build();
         final Opinion opinion3 = Opinion.builder()
                 .rating(5)
-                .userName("Karolina")
+                .userName("User 3")
                 .build();
         final Opinion opinion4 = Opinion.builder()
                 .rating(3.5)
-                .userName("Koks z bałut")
+                .userName("User 4")
                 .build();
         final Opinion opinion5 = Opinion.builder()
                 .rating(4)
-                .userName("Ada")
+                .userName("User 5")
                 .build();
         final Opinion opinion6 = Opinion.builder()
                 .rating(2)

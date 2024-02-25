@@ -1,1 +1,0 @@
-CREATE SCHEMA "fit_auth_db";
